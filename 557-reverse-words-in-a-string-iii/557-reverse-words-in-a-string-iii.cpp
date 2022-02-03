@@ -23,15 +23,18 @@ public:
         {
             string h=vec[i];
             
-            int m=h.length(),j=0;
-            string n="";
-            for(j=m-1;j>=0;j--)
-                n+=h[j];
+            int m=h.length()-1,j=0;
+            while(j<m)
+            {
+                char ch=h[j];
+                h[j]=h[m];
+                h[m]=ch;
+                j++;
+                m--;
+              //  vec.push_back("b");
+            }
+            vec[i]=h;
             
-            vec[i]=n;
-            
-         
-         
         }
         string res="";
         
