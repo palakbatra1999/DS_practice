@@ -4,7 +4,7 @@ public:
        // sort(nums.begin(),nums.end());
         vector<int> result;
         int i=0,j=nums.size()-1;
-        ///////////////////////////
+  
         while(i<j)
         {
            int m=target-nums[i];
