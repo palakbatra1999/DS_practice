@@ -4,26 +4,23 @@ public:
         int i,l=nums.size();
         int sum=0;
         map<int,int> mp;
-        vector<int> vec;
+     //   vector<int> vec;
         mp[sum]=1;
-        for(i=0;i<l;i++)
-        { 
-           sum+=nums[i];
-           
-            vec.push_back(sum);
-            
-        }
+     
       int count=0;
         for(i=0;i<l;i++)
-        {
+        { 
+            sum+=nums[i];
            
-                int c=vec[i]-k;
+                int c=sum-k;
                 if(mp[c]>0)
                     count+=mp[c];
             
-            mp[vec[i]]++;
+            mp[sum]++;  //trick is to store the value in map after all the conditions checked
         }
         
         return count;
     }
 };
+
+
