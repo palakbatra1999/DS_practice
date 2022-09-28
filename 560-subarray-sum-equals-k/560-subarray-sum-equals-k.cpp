@@ -5,7 +5,7 @@ public:
         int sum=0;
         map<int,int> mp;
      //   vector<int> vec;
-        mp[sum]=1;
+        mp[sum]=1; // if k==sum then the c will be zero that's why this condition is required.
      
       int count=0;
         for(i=0;i<l;i++)
