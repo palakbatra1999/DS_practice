@@ -14,6 +14,7 @@ public:
             {
                 v.push_back(i);
                 v.push_back(m[c]);
+                 return v;
             }
         }
         return v;
