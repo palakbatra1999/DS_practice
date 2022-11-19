@@ -11,17 +11,30 @@ class Solution{
     // x: element whose floor is to find
     int findFloor(vector<long long> v, long long n, long long x){
         
-      //  int n=v.size();
-      int c=-1,index=-1;
-      for(int i=0;i<n;i++)
-      {
-          if(v[i]<=x)
-          c=i;
-      }
+    int left=0,right=n-1,mid;
+    
+    int c=-1;
+    if(v[n-1]<=x)
+    return n-1;
+    while(left!=right)
+    {
+        mid=(left+right)/2;
         
+        if(v[mid]==x)
+        return mid;
         
-        return c;
+        else if(v[mid]<x)
+        {
+            left=mid+1;
+            c=mid;
+        }
         
+        else
+        {
+            right=mid;
+        }
+    }
+    return c;    
         
     }
 };
