@@ -5,8 +5,8 @@ public:
         int l=num.length(),i;
         for(i=l-1;i>=0;i--)
         {
-            int c=(int)num[i]-48;
-            if(c%2!=0)
+            //int c=(int)num[i]-48;
+            if(((int)num[i]-48)%2!=0)
                 return i;
             
         }
