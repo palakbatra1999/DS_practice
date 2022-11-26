@@ -15,14 +15,12 @@ public:
     string largestOddNumber(string num) {
         int l=num.length(),i;
         
-        string str="";
+      //  string str="";
         
         int index=find(num);
         
-        for(i=0;i<=index;i++)
-            str+=num[i];
-        
-        return str;
+       num.resize(index+1);
+        return num;
         
     }
 };
