@@ -1,9 +1,8 @@
 class Solution {
 public:
     int maxDepth(string s) {
-        int i=0,l=s.length(),j,count=0,d=0;
+        int i=0,l=s.length(),count=0,d=0;
         
-        stack<char> st;
         
         while(i<l)
         {
