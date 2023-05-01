@@ -1,0 +1,25 @@
+void printsub(vector<int> arr,int n, int i,vector<int> &output,int sum)
+    {
+        if(i==n)
+        {
+            output.push_back(sum);
+           // cout<<sum<<" ";
+            return;
+        }
+         
+        printsub(arr,n,i+1,output,sum+arr[i]);
+        printsub(arr,n,i+1,output,sum);
+        
+        return;
+       
+    }
+    
+    vector<int> subsetSums(vector<int> arr, int N)
+    {
+        
+      vector<int> output;
+      int sum=0;
+     printsub(arr,N,0,output,sum);
+       sort(output.begin(),output.end());
+      return output;
+    }
