@@ -1,0 +1,33 @@
+public:
+    void print(vector<int> arr, int target, vector<vector<int>> &ans,vector<int> &out,int i,int n)
+    {
+        if(i==n)
+        {
+            if(target==0)
+           {
+                ans.push_back(out);
+               
+           }
+            return;
+        }
+
+        if(arr[i]<=target)
+        {
+            out.push_back(arr[i]);
+            print(arr,target-arr[i],ans,out,i,n);
+            out.pop_back();
+        }
+       
+       print(arr,target,ans,out,i+1,n);
+       
+
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        
+         vector<vector<int>> ans;
+         vector<int> out;
+         int n=candidates.size();
+         print(candidates,target,ans,out,0,n);
+         return ans;
+    }
+};
