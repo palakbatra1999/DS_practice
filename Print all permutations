@@ -33,4 +33,46 @@ public:
     }
 
     } 
+    
+    --------------------------------------------------------------- better solution ------------------------------------------
+    
+    class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        int n=nums.size(),i;
+        vector<int> out;
+
+        for(int i=0;i<n;i++)
+        out.push_back(nums[i]);
+       
+        func(out,ans,n,0);
+        return ans;
+    }
+
+    void func( vector<int>& out,vector<vector<int>> &ans,int n,int i)
+    {
+        if(i==n)
+        {
+            ans.push_back(out);
+            return;
+        }
+
+        for(int j=i;j<n;j++)
+        {
+            swap(i,j,out);
+            func(out,ans,n,i+1);
+            swap(j,i,out);
+        }
+       
+
+    } 
+
+    void swap(int i,int j,vector<int> &nums)
+    {
+       int c=nums[j];
+       nums[j]=nums[i];
+       nums[i]=c;
+    }
+};
 };
