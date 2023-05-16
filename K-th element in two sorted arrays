@@ -1,0 +1,52 @@
+class Solution{
+    public:
+    int find(int a[],int b[],int n,int m,int k)
+    {
+        int i=0,j=0,h=0;
+        
+        while(i<n&&j<m)
+        {
+           if(a[i]<b[j])
+           {
+               h++;
+               if(h==k)
+               return a[i];
+               i++;
+           }
+           else
+           {
+            h++;
+            if(h==k)
+            {
+                return b[j];
+                
+            }
+            j++;
+           }
+        }
+        
+        while(i<n)
+        {
+           h++;
+               if(h==k)
+               return a[i];
+               i++;  
+        }
+        
+        while(j<m)
+        { 
+            h++;
+            if(h==k)
+            {
+                return b[j];
+                
+            }
+            j++;
+            
+        }
+    }
+    int kthElement(int a[], int b[], int n, int m, int k)
+    {
+        
+       return find(a,b,n,m,k);
+    }
