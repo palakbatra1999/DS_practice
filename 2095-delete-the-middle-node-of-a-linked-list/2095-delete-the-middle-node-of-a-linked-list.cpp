@@ -18,7 +18,7 @@ public:
         ListNode *fast=head;
         ListNode *slow=head;
         
-        ListNode *temp=head;
+     //   ListNode *temp=head;
         
         
         
