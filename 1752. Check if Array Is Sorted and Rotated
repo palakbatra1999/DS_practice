@@ -47,6 +47,17 @@ public:
     }
 };
 
+**Explanation** ::
+
+if there is a vector : [3,4,5,1,2]
+
+then two things we need to check .. 1.) it should be sorted and 2.) it should be rotated
+
+so.. if there are more than 1 mutations of arr[i] > arr[i+1] then it means it is definately not sorted..
+and if the vector looks like : [1,2,3,4,5]  sorted but arr[n-1]> arr[0]
+
+but if the vector has already 1 mutation and still arr[n-1]> arr[0] then.. that defo means that it isn't sorted.
+
 
 
 
