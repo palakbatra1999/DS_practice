@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+
+        int j=0, l= nums.size(), i=0;
+
+        while(i<l)
+        {
+            if(nums[i]!=nums[j]){
+                j++;
+                int k= nums[j];
+                nums[j]=nums[i];
+                nums[i]=k;
+            }
+            i++;
+        }
+
+        return j+1;
+    }
+};
+
+
+Explaination : 
+
+
+Key Insight for the Approach :::
+
+In a sorted array, duplicates are always adjacent.
+If you find a number different from the last unique number, it's a new unique number.
+Use two pointers:
+One pointer (i) to scan the array.
+Another pointer (j) to mark the position where the next unique number should be placed.
+
+Steps in Brief :::
+
+Traverse the array.
+Keep track of where the next unique number should go (j pointer).
+Move unique numbers forward in the array.
+Return j + 1 as the count of unique numbers.
