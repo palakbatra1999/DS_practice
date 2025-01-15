@@ -1,0 +1,66 @@
+
+// } Driver Code Ends
+class Solution {
+  public:
+    // a,b : the arrays
+    // Function to return a list containing the union of the two arrays.
+    
+    
+    vector<int> findUnion(vector<int> &a, vector<int> &b) {
+        
+        int l=a.size(),n=b.size(),i=0,j=0;
+        
+        vector<int> Vec;
+        
+        
+        
+        while(i<l && j< n)
+        {
+            if(a[i]<=b[j] )
+            {
+                 if( Vec.empty())
+               { Vec.push_back(a[i]);}
+               else if ( a[i]!=Vec[Vec.size()-1])
+                {Vec.push_back(a[i]);}
+                
+                i++;
+                
+            }else 
+            {
+                 if( Vec.empty())
+                {Vec.push_back(b[i]);}
+                else if (b[j]!=Vec[Vec.size()-1])
+               { Vec.push_back(b[j]);}
+                
+                j++;
+            }
+        }
+         while(i<l)
+         {
+              if( Vec.empty())
+               { Vec.push_back(a[i]);}
+               else if ( a[i]!=Vec[Vec.size()-1])
+                {Vec.push_back(a[i]);}
+                i++;
+         }
+         
+          while(j<n)
+         {
+              if( Vec.empty())
+                {Vec.push_back(b[i]);}
+                else if (b[j]!=Vec[Vec.size()-1])
+               { Vec.push_back(b[j]);}
+                
+                j++;
+         }
+        
+        return Vec;
+      
+      
+      
+    }
+};
+
+
+
+// } Driver Code Ends
