@@ -1,3 +1,5 @@
+Approach B (better):
+
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
@@ -29,6 +31,41 @@ public:
         
         for(i=0;i<n;i++)
             nums[i]=vec[i];
+        
+    }
+};
+
+
+Approach C(best): (DNF sorting algorithm)
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+
+        int low=0,mid=0,high=nums.size()-1;
+
+        while(mid<=high)
+        {
+            if(nums[mid]==0)
+            {
+                int c=nums[mid];
+                nums[mid]=nums[low];
+                nums[low]=c;
+
+                low++;
+                mid++;
+            } else if(nums[mid]==1)
+            {
+                mid++;
+            } else 
+            {
+                 int c=nums[mid];
+                nums[mid]=nums[high];
+                nums[high]=c;
+
+                high--;
+            }
+        }
         
     }
 };
