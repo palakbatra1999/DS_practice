@@ -1,22 +1,23 @@
-class Solution {
+Brute force approach: O(n3)
+
+Better approach: O(n2) take summation of the nums[j] and check for max
+
+Best approach(Kadanes algorithm) : class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int sum=0;
-        int i,j,n=nums.size(),m=INT_MIN;
-        vector<int> v;
-        
-        for(i=0;i<n;i++)
+
+        int max=nums[0], sum=0;
+        for(int i=0;i<nums.size();i++)
         {
             sum=sum+nums[i];
-            
-          if(sum>m)
-              m=sum;
-           if(sum<0)
-              sum=0;
-            
+            if(sum>max)
+            {
+              max=sum;
+            }
+            if(sum<0)
+            sum=0;
         }
-     
-      
-        return m;
+        return max;
+        
     }
 };
