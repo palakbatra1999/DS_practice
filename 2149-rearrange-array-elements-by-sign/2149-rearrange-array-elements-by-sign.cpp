@@ -1,3 +1,5 @@
+brute force ::
+
 class Solution {
 public:
     vector<int> rearrangeArray(vector<int>& nums) {
@@ -19,4 +21,31 @@ public:
         
         return vec;
     }
+
+
+    better approach :: 
+
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+
+        int i=0,j=1, l = nums.size();
+        vector<int> res(l,0);
+
+        for(int k=0;k<l;k++)
+        {
+            if(nums[k]>0)
+            {
+               res[i]=nums[k];
+               i= i+2;
+            } else{
+                res[j]=nums[k];
+                j=j+2;
+            }
+        }
+
+        return res;
+        
+    }
+};
 };
