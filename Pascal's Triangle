@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+
+        vector<vector<int>> v;
+        vector<int> vec;
+        vec.push_back(1);
+        v.push_back(vec);
+         cout<<" "<<v.size()<<" ";
+        numRows=numRows-1;
+        while(numRows)
+        {
+             vector<int> ans;
+             int l=v.size();
+            cout<<" "<<l<<" ";
+            for(int i=0;i<v[l-1].size()+1;i++)
+            {
+               if(i==0 || i==  v[l-1].size())      // just use previous vector to generate the next
+               ans.push_back(1);
+               else ans.push_back(v[l-1][i]+v[l-1][i-1]);
+            }
+            numRows--;
+
+            v.push_back(ans);
+        }
+        return v;
+    }
+};
