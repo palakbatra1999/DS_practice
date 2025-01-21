@@ -1,26 +1,26 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-        int i,l=nums.size();
-        int sum=0;
-        map<int,int> mp;
-     //   vector<int> vec;
-        mp[sum]=1; // if k==sum then the c will be zero that's why this condition is required.
-     
-      int count=0;
-        for(i=0;i<l;i++)
-        { 
+
+        map<int,int> pSum;
+
+        pSum[0]=1;
+
+        int sum=0, count=0;
+
+        for(int i=0;i<nums.size();i++)
+        {
             sum+=nums[i];
-           
-                int c=sum-k;
-                if(mp[c]>0)
-                    count+=mp[c];
-            
-            mp[sum]++;  //trick is to store the value in map after all the conditions checked
+
+            if(pSum.find(sum-k)!=pSum.end())
+            {
+               count+=pSum[sum-k];
+            }
+
+            pSum[sum]++;
         }
-        
+
         return count;
+        
     }
 };
-
-
