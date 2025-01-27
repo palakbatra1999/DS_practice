@@ -1,25 +1,29 @@
-int Solution::solve(vector<int> &arr, int b) {
-    
-      int i,j,count=0,n=arr.size();
+int Solution::solve(vector<int> &nums, int k) {
     
     map<int,int> mp;
-    int xr=0,y;
     
-    for(i=0;i<n;i++)
+    int l=nums.size(),sum=0,max=0;
+    
+    for(int i=0;i<l;i++)
     {
-        xr=xr^arr[i];
-        if(xr==b)
-        count++;
-        if(mp.find(xr^b)!=mp.end())
-        count+=mp[xr^b];
-        
-        if(mp.find(xr)!=mp.end())
-        mp[xr]++;
-        else mp[xr]=1;
-        
+       sum=sum^nums[i];
+    
+    if(sum==k)
+    max++;
        
-        
+       if(mp.find(sum ^ k) !=mp.end())
+       {
+           max+=mp[sum^k];
+         
+       } 
+       
+         mp[sum]++;
+       
     }
     
-    return count;
+    return max;
+    
+    
+    
+    
 }
