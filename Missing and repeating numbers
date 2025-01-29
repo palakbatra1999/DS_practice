@@ -1,0 +1,47 @@
+Optimal approach :
+Using mathematical aproach ------------------- sum of arr and sum of squares of arrays to generate (x-y) and (x+y)
+
+    int n = arr.size();
+    long long sumArr = 0, squareSum = 0;
+    long long sumN = (n * (n + 1LL)) / 2;  // Expected sum
+    long long sumNSquare = (n * (n + 1LL) * (2 * n + 1LL)) / 6; // Expected sum of squares
+
+    // Compute sumArr and squareSum
+    for (int num : arr) {
+        sumArr += num;
+        squareSum += (long long)num * num;
+    }
+
+    long long diffSum = sumN - sumArr;  // x - y
+    long long diffSquareSum = sumNSquare - squareSum; // x² - y²
+
+    long long sumXY = diffSquareSum / diffSum; // x + y
+
+    int missing = (sumXY + diffSum) / 2;
+    int repeating = (sumXY - diffSum) / 2;
+
+    return {repeating, missing};
+
+
+Better approach : 
+
+#include <vector>
+
+std::vector<int> findTwoElement(std::vector<int>& arr) {
+    int n = arr.size();
+    std::vector<int> mp;
+    std::vector<int> vec(n + 1, 0);
+
+    // Count occurrences of each number
+    for (int i = 0; i < n; i++) {
+        vec[arr[i]]++;
+    }
+
+    // Find the repeating and missing numbers
+    for (int i = 1; i <= n; i++) {
+        if (vec[i] > 1) mp.push_back(i); // Repeating number
+        if (vec[i] == 0) mp.push_back(i); // Missing number
+    }
+
+    return mp;
+}
