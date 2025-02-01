@@ -1,0 +1,32 @@
+ int searchInsert(vector<int>& nums, int target) {
+
+        int low=0,high=nums.size()-1,min=INT_MAX,max=INT_MIN,index=-1;
+
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+
+            if(nums[mid]==target)
+            return mid;
+
+          else  if(nums[mid]>target)
+            {
+
+                if(min>nums[mid])
+               { min=nums[mid];
+               index=mid;}
+                high=mid-1;
+            }else {
+                low=mid+1;
+            }
+
+        }
+
+        if(target<nums[0])
+        return 0;
+        else if(target>nums[nums.size()-1])
+        return nums.size();
+
+        return index;
+        
+    }
