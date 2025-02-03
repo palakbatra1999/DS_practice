@@ -1,0 +1,48 @@
+vector<int> searchRange(vector<int>& nums, int x) {
+
+        int low = 0, high = nums.size() - 1, last = INT_MIN, first = INT_MAX;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] < x) {
+
+                low = mid + 1;
+            } else {
+
+                if (nums[mid] == x && mid < first)
+                    first = mid;
+
+                cout << " Entered first loop in mid:::" << mid << " "
+                     << "first::" << first;
+
+                high = mid - 1;
+            }
+        }
+
+        low = 0, high = nums.size() - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] > x) {
+
+                high = mid - 1;
+            } else {
+                if (nums[mid] == x && mid > last)
+                    last = mid;
+
+                low = mid + 1;
+            }
+        }
+
+        if (last == INT_MIN)
+            last = -1;
+
+        if (first == INT_MAX)
+            first = -1;
+
+        vector<int> vec;
+        vec.push_back(first);
+        vec.push_back(last);
+
+        return vec;
+    }
