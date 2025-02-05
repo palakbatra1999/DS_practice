@@ -1,0 +1,48 @@
+intuition ::: try thinking of increasing and decreasing order sequences--------------------
+
+1. If nums[mid] is smaller than nums[mid-1] (left side is larger):
+
+The left side is decreasing because nums[mid-1] > nums[mid].
+We know that in a decreasing sequence, the numbers on the left side are getting smaller.
+So, a peak must exist on the left side, since the values are still decreasing as we move left, and eventually, we should encounter a number that is greater than its neighbor on the left.
+Move left (high = mid - 1).
+
+2. If nums[mid] is smaller than nums[mid+1] (right side is larger):
+
+The right side is increasing because nums[mid+1] > nums[mid].
+We know that in an increasing sequence, the numbers on the right side are getting larger.
+So, a peak must exist on the right side, because the values are increasing, and eventually, there will be a point where a number is greater than its right neighbor.
+Move right (low = mid + 1).
+
+--------------------------------------------------------------------------------------------
+
+int findPeakElement(vector<int>& nums) {
+
+        int n = nums.size();
+
+        if (n == 1)
+            return 0;
+
+        if (nums[0] > nums[1])
+            return 0;
+
+        if (nums[n - 1] > nums[n - 2])
+            return n - 1;
+
+        int low = 1, high = n - 2;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1])
+                return mid;
+
+            if (nums[mid] >= nums[mid - 1]) {
+                low = mid + 1;
+            } else if (nums[mid] < nums[mid - 1]) {
+                high = mid - 1;
+            }
+        }
+
+        return -1;
+    }
