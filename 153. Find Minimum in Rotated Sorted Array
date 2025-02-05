@@ -1,0 +1,40 @@
+## 🔍 Key Idea: Finding the Minimum in a Rotated Sorted Array
+
+### 📌 Binary Search Conditions:
+
+1. **Left Sorted Condition:**  
+   - If `nums[low] ≤ nums[mid]`, it means the **left part is sorted**.
+   - The **smallest value in this part is `nums[low]`**, so we update our `mini`.
+   - Since the minimum cannot be in this sorted part, move `low = mid + 1`.
+
+2. **Right Sorted Condition:**  
+   - If `nums[mid] ≤ nums[high]`, it means the **right part is sorted**.
+   - The **smallest value in this part is `nums[mid]`**, so we update our `mini`.
+   - Since the minimum is in this sorted part, move `high = mid - 1`.
+
+This approach ensures that we efficiently **find the minimum in O(log N) time** using binary search.
+
+
+ int findMin(vector<int>& nums) {
+
+        int low=0,high=nums.size()-1,mini=50001;
+
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+
+            if(nums[low]<=nums[mid])
+            {
+              mini=min(mini,nums[low]);
+              low=mid+1;
+            } else if(nums[mid]<=nums[high]){
+                 mini=min(mini,nums[mid]);
+                 high=mid-1;
+            }
+        }
+
+       cout<<"low<<"<<low<< "high ::"<<high;
+
+       return mini;
+        
+    }
