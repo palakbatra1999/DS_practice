@@ -1,0 +1,16 @@
+int floorSqrt(int n) {
+    int low = 0, high = n, ans = 0;
+    
+    while (low <= high) {
+        int mid = low + (high - low) / 2;  // Avoids overflow
+        
+        if ((long long)mid * mid <= n) {  // Prevents integer overflow
+            ans = mid;  // Store potential answer
+            low = mid + 1;  // Move right to find a closer sqrt
+        } else {
+            high = mid - 1;  // Move left
+        }
+    }
+    
+    return ans;
+}
