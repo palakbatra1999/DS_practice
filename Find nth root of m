@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/**
+ * Function to compute `mid^n` while handling overflow.
+ */
+long long power(long long mid, int n) {
+    long long result = 1;
+    while (n--) {
+        if (result > 1e18 / mid)  // Prevent overflow
+            return LLONG_MAX;
+        result *= mid;
+    }
+    return result;
+}
+
+/**
+ * Function to find the nth root of `m` using Binary Search.
+ */
+int nthRoot(int n, int m) {
+    int low = 1, high = m, ans = -1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        long long temp = power(mid, n);
+
+        if (temp == m) 
+            return mid;  // Found exact root
+        
+        if (temp < m) {
+            ans = mid;  // Store best possible answer
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return ans;  // Return the integer floor of nth root
+}
+
+int main() {
+    int n = 3, m = 27;  // Example: Cube root of 27
+    cout << "nth root: " << nthRoot(n, m) << endl;
+    return 0;
+}
