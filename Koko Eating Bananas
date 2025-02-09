@@ -1,0 +1,43 @@
+class Solution {
+public:
+    // Function to find the maximum pile size
+    // This helps in setting the upper bound of our binary search range
+    int findMax(vector<int>& piles) {
+        int ans = INT_MIN;
+        for (int i = 0; i < piles.size(); i++) {
+            ans = max(ans, piles[i]);  // Update max pile size
+        }
+        return ans;
+    }
+
+    // Function to calculate the total hours required to eat all bananas at a given speed (mid)
+    long long findBana(vector<int>& piles, int mid) {
+        long long temp = 0;  // Use long long to prevent integer overflow
+        
+        for (int i = 0; i < piles.size(); i++) {
+            // Instead of using ceil(), use this trick: (piles[i] + mid - 1) / mid
+            temp += (piles[i] + mid - 1) / mid;
+        }
+
+        return temp;  // Total hours required
+    }
+
+    // Function to find the minimum eating speed using Binary Search
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int low = 1, high = findMax(piles); // Search space: [1, max pile size]
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;  // Avoid integer overflow
+
+            if (findBana(piles, mid) <= h) {  
+                // If Koko can eat all bananas within h hours, try a smaller speed
+                high = mid - 1;
+            } else {
+                // Otherwise, increase speed
+                low = mid + 1;
+            }
+        }
+
+        return low;  // The minimum valid speed that allows finishing within h hours
+    }
+};
