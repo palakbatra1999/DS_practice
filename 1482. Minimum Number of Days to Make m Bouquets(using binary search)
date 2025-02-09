@@ -1,0 +1,50 @@
+class Solution {
+public:
+    bool findCheck(vector<int>& bloomDay, int mid, int m, int k) {
+        int n = bloomDay.size();
+        int temp = 0, ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (bloomDay[i] <= mid) {
+                temp++;
+                if (temp == k) {
+                    ans++;
+                    temp = 0; // Reset temp after forming one bouquet
+                }
+            } else {
+                temp = 0; // Reset temp if the flower isn't bloomed
+            }
+        }
+
+        return ans >= m; // Check if we can make at least `m` bouquets
+    }
+
+    int findMaxBloomDay(vector<int>& bloomDay) {
+        int ans = INT_MIN;
+        for (int day : bloomDay) {
+            ans = max(ans, day);
+        }
+        return ans;
+    }
+
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        if ((long long)m * k > bloomDay.size())
+            return -1; // Use long long to prevent overflow
+
+        int low = 1, high = findMaxBloomDay(bloomDay);
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (findCheck(bloomDay, mid, m, k)) {
+                ans = mid; // Possible answer, but try for smaller days
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+};
