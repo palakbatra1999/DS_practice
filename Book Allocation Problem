@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function to calculate the sum of all elements in the array
+int findMax(vector<int>& arr) {
+    int sum = accumulate(arr.begin(), arr.end(), 0);
+    return sum;
+}
+
+// Function to find the maximum element in the array
+int findMin(vector<int>& arr) {
+    return *max_element(arr.begin(), arr.end());
+}
+
+// Function to count the number of students required to allocate books with a given max pages limit
+int countStudents(vector<int>& arr, int maxPages) {
+    int students = 1, pagesAllocated = 0;
+
+    for (int pages : arr) {
+        if (pagesAllocated + pages <= maxPages) {
+            pagesAllocated += pages;
+        } else {
+            students++;
+            pagesAllocated = pages;
+        }
+    }
+    return students;
+}
+
+// Function to find the minimum possible maximum number of pages allocated to a student
+int findPages(vector<int>& arr, int n, int m) {
+    if (m > n) return -1; // If students are more than books, allocation is impossible
+
+    int low = findMin(arr), high = findMax(arr);
+    int result = high; // Store the minimum possible max pages
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        int studentsRequired = countStudents(arr, mid);
+
+        if (studentsRequired <= m) {
+            result = mid; // Update result to the better minimum
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    return result;
+}
+
+// Example usage
+int main() {
+    vector<int> books = {12, 34, 67, 90}; // Number of pages in books
+    int students = 2;
+
+    int minPages = findPages(books, books.size(), students);
+    cout << "Minimum maximum pages assigned: " << minPages << endl;
+
+    return 0;
+}
