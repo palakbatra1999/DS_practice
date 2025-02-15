@@ -1,0 +1,77 @@
+// Solution.cpp
+// ---------------------------
+// This solution splits an array into 'k' subarrays such that the largest subarray sum is minimized.
+// It uses binary search on the answer space (from the max element to the total sum of the array)
+// to efficiently determine the minimum possible largest sum.
+//
+// Key Functions:
+// - findMax:  Finds the maximum element in the array.
+// - findSum:  Computes the total sum of the array.
+// - countSubarrays: Given a max allowed sum, determines the number of subarrays needed.
+// - splitArray: Uses binary search to find the minimum largest subarray sum that allows for k splits.
+
+#include <vector>
+#include <climits>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    // Function to find the maximum element in the array
+    int findMax(vector<int>& nums) {
+        int maxVal = INT_MIN; // Initialize with the smallest possible integer
+        for (int num : nums) {
+            maxVal = max(maxVal, num);
+        }
+        return maxVal;
+    }
+
+    // Function to compute the sum of all elements in the array
+    int findSum(vector<int>& nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        return sum;
+    }
+
+    // Function to determine the number of subarrays needed
+    // given that no subarray sum exceeds 'mid'
+    int countSubarrays(vector<int>& nums, int mid) {
+        int partitions = 1; // At least one subarray is needed
+        int sum = 0;       // Sum for the current subarray
+
+        for (int num : nums) {
+            if (sum + num <= mid) {
+                sum += num; // Add current element to the current subarray
+            } else {
+                // Start a new subarray when sum exceeds mid
+                sum = num;
+                partitions++;
+            }
+        }
+        return partitions;
+    }
+
+    // Main function to split the array into 'k' subarrays minimizing the largest subarray sum
+    int splitArray(vector<int>& nums, int k) {
+        int low = findMax(nums);  // Minimum possible largest sum (must at least be the max element)
+        int high = findSum(nums); // Maximum possible largest sum (sum of all elements)
+
+        // Binary search to find the optimal largest subarray sum
+        while (low <= high) {
+            int mid = (low + high) / 2; // Candidate largest subarray sum
+            int partitions = countSubarrays(nums, mid);
+
+            if (partitions <= k) {
+                // It's possible to split into at most k subarrays with this candidate sum,
+                // try for a smaller maximum by adjusting the high bound.
+                high = mid - 1;
+            } else {
+                // More than k partitions needed, increase the candidate sum.
+                low = mid + 1;
+            }
+        }
+        return low; // The minimum largest sum possible for k subarrays
+    }
+};
