@@ -1,0 +1,56 @@
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    // Merges two sorted arrays into one sorted array.
+    vector<int> makeArray(vector<int>& a, vector<int>& b) {
+        vector<int> merged;
+        int i = 0, j = 0;
+        int n = a.size(), m = b.size();
+
+        // Merge elements from both arrays until one is exhausted.
+        while (i < n && j < m) {
+            // Compare current elements from both arrays and add the smaller one.
+            if (a[i] <= b[j]) {
+                merged.push_back(a[i]);
+                i++; // Move pointer in array 'a'
+            } else {
+                merged.push_back(b[j]);
+                j++; // Move pointer in array 'b'
+            }
+        }
+
+        // If there are remaining elements in 'a', add them.
+        while (i < n) {
+            merged.push_back(a[i]);
+            i++;
+        }
+
+        // If there are remaining elements in 'b', add them.
+        while (j < m) {
+            merged.push_back(b[j]);
+            j++;
+        }
+
+        return merged;
+    }
+
+    // Finds the median of two sorted arrays.
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        // Merge the two sorted arrays into one.
+        vector<int> merged = makeArray(nums1, nums2);
+        int totalSize = merged.size();
+
+        // If the merged array has an odd number of elements,
+        // the median is the middle element.
+        if (totalSize % 2 != 0) {
+            return double(merged[totalSize / 2]);
+        }
+        
+        // If the merged array has an even number of elements,
+        // the median is the average of the two middle elements.
+        double median = double(merged[totalSize / 2] + merged[(totalSize / 2) - 1]) / 2;
+        return median;
+    }
+};
