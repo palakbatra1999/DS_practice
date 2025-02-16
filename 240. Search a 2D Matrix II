@@ -1,3 +1,12 @@
+Step-by-Step Thinking:
+We start from the top-right corner of the matrix (matrix[0][m-1]).
+Why? Because this position gives us the best decision point:
+If the target is smaller, we move left (since the leftward elements are smaller).
+If the target is greater, we move downward (since the lower elements are greater).
+We continue this elimination process until either:
+We find the target, returning true.
+We move out of bounds (row >= n or col < 0), returning false.
+
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
