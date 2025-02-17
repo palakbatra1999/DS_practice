@@ -1,0 +1,104 @@
+class Solution {
+public:
+    // Helper function to count the number of elements in the matrix
+    // that are less than or equal to a given value 'h'
+    int check(const vector<vector<int>> &mat, int h) {
+        int n = mat.size();        // number of rows
+        int m = mat[0].size();     // number of columns
+        int ans = 0;               // accumulator for count
+        
+        // Process each row of the matrix
+        for (int i = 0; i < n; i++) {
+            // Binary search in the current row to find the first index where
+            // the element is greater than 'h'.
+            int low = 0, high = m - 1;
+            int temp = INT_MAX;    // will store the index of first element > h
+            
+            while (low <= high) {
+                int mid = (low + high) / 2;
+                if (mat[i][mid] > h) {
+                    temp = mid;    // record the index where element > h
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            // If no element is greater than 'h', then all elements in this row are <= h.
+            // So, count all 'm' elements.
+            if (temp == INT_MAX)
+                temp = m;
+            
+            // Add the count from this row to the total count.
+            ans += temp;
+        }
+        return ans;
+    }
+    
+    // Find the minimum element in the matrix (using the first column of each row)
+    int findMin(const vector<vector<int>> &mat, int n) {
+        int mi = INT_MAX;
+        for (int i = 0; i < n; i++) {
+            mi = min(mi, mat[i][0]);
+        }
+        return mi;
+    }
+    
+    // Find the maximum element in the matrix (using the last column of each row)
+    int findMax(const vector<vector<int>> &mat, int n, int m) {
+        int ma = INT_MIN;
+        for (int i = 0; i < n; i++) {
+            ma = max(ma, mat[i][m - 1]);
+        }
+        return ma;
+    }
+    
+    // Main function to find the median in a row-wise sorted matrix
+    int median(vector<vector<int>> &mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        
+        // Find the search range for the median: [low, high]
+        int low = findMin(mat, n);
+        int high = findMax(mat, n, m);
+        
+        // 'req' represents the count of numbers that should be less than or equal to the median.
+        // For an odd number of total elements, this is floor(n*m/2).
+        int req = (n * m) / 2;
+        
+        // Binary search over the value range to find the median.
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            // Count how many elements in the matrix are <= mid.
+            int temp = check(mat, mid);
+            
+            // If count is greater than required, median must be lower.
+            if (temp > req)
+                high = mid - 1;
+            else
+                // Otherwise, median is higher or equal.
+                low = mid + 1;
+        }
+        
+        // When the loop ends, 'low' is the smallest number for which
+        // the count of numbers <= 'low' is greater than 'req'.
+        return low;
+    }
+};
+
+
+
+Intuition Behind the Code
+Finding the Range:
+
+We determine the smallest (low) and largest (high) elements in the matrix.
+Since each row is sorted, the minimum element is at the beginning of each row, and the maximum is at the end.
+Counting Elements ≤ h (Function: check):
+
+For a given value h, we use binary search in each row (because rows are sorted) to count how many elements are less than or equal to h.
+If a row has no element greater than h, then all elements in that row are ≤ h.
+Binary Search for the Median:
+
+We perform binary search over the possible value range [low, high].
+For each candidate mid, we count the total number of elements ≤ mid using check.
+We adjust our search range based on whether this count is greater than or less than the required count (half of the total elements).
+Once finished, low holds the median value.
