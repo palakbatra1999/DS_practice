@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+
+        if (strs.empty())
+            return ""; // If list is empty, return ""
+
+        string prefix = strs[0]; // Start with the first word
+
+        for (int i = 1; i < strs.size(); i++) { // Compare with every other word
+            while (strs[i].find(prefix) !=
+                   0) { // Check if prefix is in the beginning
+                prefix =
+                    prefix.substr(0, prefix.length() - 1); // Remove last letter
+                if (prefix.empty())
+                    return ""; // If no common part left, return ""
+            }
+        }
+        return prefix; // Return the common prefix
+    }
+};
+
+
+
+
+
+
+
+
+
+---------------------------------------
+
+explanation :
+
+✅ Optimized Approach: Trim the Prefix
+🔹 How Does It Work?
+Take the first word as the starting prefix.
+→ Prefix = "flower"
+Compare this prefix with the next word ("flow")
+"flower" and "flow" → Common part = "flow"
+Update prefix → Prefix = "flow"
+Compare the updated prefix with the next word ("flight")
+"flow" and "flight" → **Common part = "fl"`
+Update prefix → Prefix = "fl"
+If the prefix becomes empty at any step, return "".
