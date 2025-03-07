@@ -87,14 +87,3 @@ public:
 🔹 **Think about time complexity first**  
 🔹 **Avoid unnecessary operations inside loops**  
 🔹 **Optimize memory by using string slicing instead of concatenation**  
-
----
-
-## 📂 How to Upload This to GitHub
-1. **Go to your GitHub repository** (or create a new one).
-2. Click on **"Add file" → "Upload file"**.
-3. Drag and drop this Markdown file (`largest_odd_number.md`).
-4. Click **"Commit changes"** to save it.
-
-Now you can **revisit this anytime** to revise! 🚀
-
