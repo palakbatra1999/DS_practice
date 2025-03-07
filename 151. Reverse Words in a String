@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        string result = "", word = "";
+        int n = s.length();
+        
+        for (int i = 0; i < n; i++) {
+            if (s[i] != ' ') {
+                word += s[i];  // Build the word
+            } else if (!word.empty()) {
+                if (!result.empty()) 
+                    result = ' ' + result;  // Add space only if result already has words
+                
+                result = word + result;  // Prepend the word to reverse order
+                word.clear();  // Reset word storage
+            }
+        }
+
+        // Add the last word if it exists
+        if (!word.empty()) {
+            if (!result.empty()) 
+                result = ' ' + result;
+            result = word + result;
+        }
+
+        return result;
+    }
+};
