@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        if (s.length() != t.length()) return false;  // Lengths must be equal
+
+        unordered_map<char, char> mapST; // Maps s -> t
+        unordered_map<char, char> mapTS; // Maps t -> s
+
+        for (int i = 0; i < s.length(); i++) {
+            char charS = s[i];
+            char charT = t[i];
+
+            // Check mapping from s -> t
+            if (mapST.count(charS) && mapST[charS] != charT) 
+                return false;
+
+            // Check mapping from t -> s
+            if (mapTS.count(charT) && mapTS[charT] != charS) 
+                return false;
+
+            // Add valid mappings
+            mapST[charS] = charT;
+            mapTS[charT] = charS;
+        }
+
+        return true;
+    }
+};
