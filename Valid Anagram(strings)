@@ -1,0 +1,55 @@
+..Instead of using two maps (mp and pm), you can just use one.
+....// Increment for s[I]
+....//// Decrement for t[i]
+
+most efficient approach -> 
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length()) return false;
+
+        int freq[26] = {0}; // Array to count characters (only lowercase)
+
+        for (int i = 0; i < s.length(); i++) {
+            freq[s[i] - 'a']++; // Increment for s[i]
+            freq[t[i] - 'a']--; // Decrement for t[i]
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] != 0) return false;
+        }
+
+        return true;
+    }
+};
+
+
+slightly less efficient -> 
+
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+
+      if (s.length() != t.length()) 
+            return false;
+
+        map<char, int> freq;
+
+        // Count frequency for string s (+1) and t (-1)
+        for (int i = 0; i < s.length(); i++) {
+            freq[s[i]]++;
+            freq[t[i]]--;
+        }
+
+        // Check if all frequencies are zero
+        for (auto it : freq) {
+            if (it.second != 0)
+                return false;
+        }
+
+        return true;
+        
+    }
+};
