@@ -1,0 +1,11 @@
+What is the Sliding Window Technique?
+The Sliding Window technique is a powerful method used to efficiently solve problems involving subarrays or substrings. Instead of generating all substrings (which is slow), we use two pointers (left and right) to expand and contract a window within the string dynamically.
+
+How Does Sliding Window Help in This Problem?
+We need to count substrings with exactly K distinct characters. Instead of checking all possible substrings, we use a sliding window to maintain a valid substring range efficiently.
+
+Expand the right boundary (right pointer) to add new characters to the current window.
+
+Shrink the left boundary (left pointer) when the window becomes invalid (i.e., has more than K distinct characters).
+
+Count the number of valid substrings as we move the right pointer.
