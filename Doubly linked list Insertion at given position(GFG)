@@ -1,0 +1,44 @@
+class Solution {
+public:
+    // Function to insert a new node at a given position in a doubly linked list.
+    Node *addNode(Node *head, int pos, int data) {
+        // Create a new node with the given data
+        Node *newNode = new Node(data);
+        Node *temp = head;
+        
+        int index = 0;
+        
+        // Traverse to the (pos)th node
+        while (temp != NULL && index < pos) {
+            temp = temp->next;
+            index++;
+        }
+        
+        // If position is out of bounds, return the original head
+        if (temp == NULL) return head;
+        
+        // Store reference to the next node (if exists)
+        Node *nextNode = temp->next;
+        
+        // Insert the new node after `temp`
+        temp->next = newNode;
+        newNode->prev = temp;
+        newNode->next = nextNode;
+        
+        // If `nextNode` exists, update its previous pointer
+        if (nextNode != NULL) {
+            nextNode->prev = newNode;
+        }
+        
+        return head; // Return the unchanged head of the list
+    }
+};
+
+/*
+    🔹 Key Points for Revision:
+    ---------------------------------
+    ✅ Traverse the list until reaching position `pos`.
+    ✅ Insert `newNode` after `temp` and update pointers.
+    ✅ Handle edge case when inserting at the end (`nextNode == NULL`).
+    ✅ If inserting in the middle, update `nextNode->prev`.
+*/
