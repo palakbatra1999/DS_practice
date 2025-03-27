@@ -1,0 +1,24 @@
+class Solution {
+public:
+    // Function to insert a new node with value 'x' at the end of the linked list
+    Node *insertAtEnd(Node *head, int x) {
+        
+        Node *val = new Node(x); // Create a new node with the given value
+        
+        // If the list is empty, return the new node as the head
+        if (head == NULL)
+            return val;
+        
+        Node *temp = head;
+        
+        // Traverse to the last node
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        
+        // Link the last node to the new node
+        temp->next = val;
+        
+        return head; // Return the updated head of the linked list
+    }
+};
