@@ -10,9 +10,7 @@
 
         // Adjust pointers to reverse the links
         ans->next = NULL;
-        if (nodeNext != NULL) {
-            nodeNext->prev = NULL;
-        }
+      
 
         // Move the last node to the front
         nodeNext->next = ans;
