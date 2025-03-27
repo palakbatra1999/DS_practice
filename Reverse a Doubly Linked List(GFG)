@@ -1,0 +1,24 @@
+  DLLNode* reverseDLL(DLLNode* ans) {
+        
+        // Base case: If list is empty or only one node, return as is
+        if (ans == NULL || ans->next == NULL) return ans;
+        
+        DLLNode *nodeNext = ans->next;
+
+        // Recursively reverse the rest of the list
+        DLLNode *newHead = reverseDLL(nodeNext);
+
+        // Adjust pointers to reverse the links
+        ans->next = NULL;
+        if (nodeNext != NULL) {
+            nodeNext->prev = NULL;
+        }
+
+        // Move the last node to the front
+        nodeNext->next = ans;
+        ans->prev = nodeNext;
+
+        return newHead;
+        
+        
+        
