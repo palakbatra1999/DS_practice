@@ -1,0 +1,37 @@
+class Solution {
+public:
+    // Function to delete a node in a singly linked list
+    // The node given is guaranteed NOT to be the tail
+    void deleteNode(ListNode* node) {
+        
+        // Edge case: If the given node is NULL, do nothing
+        if (node == nullptr || node->next == nullptr) {
+            return;
+        }
+        
+        // Copy the value of the next node into the current node
+        node->val = node->next->val;
+        
+        // Store reference to the node to be deleted
+        ListNode* temp = node->next;
+        
+        // Update the next pointer to skip the next node
+        node->next = node->next->next;
+        
+        // Free memory of the removed node
+        delete temp;
+    }
+};
+
+/*
+    ❌ Why doesn't this work: `node = node->next;`
+    ---------------------------------------------
+    - This only changes the local pointer variable `node`, not the actual linked list structure.
+    - It does NOT modify the `next` pointer of the previous node in the list.
+    - The original linked list remains unchanged.
+    
+    ✅ Correct approach:
+    - Copy the next node's value into the current node.
+    - Update the `next` pointer to skip the next node.
+    - Free the skipped node from memory.
+*/
