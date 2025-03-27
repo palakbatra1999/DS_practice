@@ -1,0 +1,51 @@
+class Solution {
+public:
+    // Function to delete a node at a given position in a doubly linked list.
+    Node* deleteNode(Node* head, int x) {
+        
+        // Edge case: If the list is empty, return NULL
+        if (head == NULL) return NULL;
+        
+        Node *temp = head;
+        int index = 0;
+        
+        // Traverse to the (x-1)th node
+        while (temp != NULL && index < x - 1) {
+            index++;
+            temp = temp->next;
+        }
+        
+        // If position is out of bounds, return the original head
+        if (temp == NULL) return head;
+        
+        Node *nodePrev = temp->prev; // Previous node
+        Node *nodeNext = temp->next; // Next node
+        
+        // If deleting a node that is not the head
+        if (nodePrev != NULL) {
+            nodePrev->next = nodeNext; // Update previous node's next pointer
+            
+            if (nodeNext != NULL) {
+                nodeNext->prev = nodePrev; // Update next node's prev pointer
+            }
+            
+            delete temp; // Free memory of deleted node
+        } else { // If deleting the head node
+            if (nodeNext != NULL) {
+                nodeNext->prev = NULL; // Update the new head's prev pointer
+                return nodeNext; // Return new head
+            }
+        }
+        
+        return head; // Return the updated head of the list
+    }
+};
+
+/*
+    🔹 Key Points for Revision:
+    ---------------------------------
+    ✅ Traverse to the (x-1)th node to find the target node.
+    ✅ Handle edge cases: empty list, deleting head node, and last node.
+    ✅ Update previous and next node pointers accordingly.
+    ✅ Free memory of deleted node to prevent memory leaks.
+*/
