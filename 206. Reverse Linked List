@@ -1,0 +1,17 @@
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        // Base case: If the list is empty or has only one node, return head
+        if (head == NULL || head->next == NULL) return head;
+
+        // Recursive call to reverse the rest of the list
+        ListNode* smallans = head->next;
+        ListNode* temp = reverseList(smallans);
+
+        // Adjust pointers to reverse the links
+        smallans->next = head;
+        head->next = NULL;
+
+        return temp;  // Return the new head of the reversed list
+    }
+};
