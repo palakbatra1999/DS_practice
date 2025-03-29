@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+/* Definition for singly-linked list */
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+class Solution {
+public:
+    // Function to find the cycle length
+    int cycleLength(ListNode* head) {
+        ListNode *slow = head, *fast = head;
+
+        // Step 1: Detect cycle using slow & fast pointers
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;          // Move slow 1 step
+            fast = fast->next->next;    // Move fast 2 steps
+
+            if (slow == fast) {  // Cycle detected
+                return countCycleLength(slow);
+            }
+        }
+        return 0; // No cycle found
+    }
+
+private:
+    // Function to count cycle length
+    int countCycleLength(ListNode* slow) {
+        ListNode* current = slow;
+        int length = 0;
+
+        do {
+            current = current->next; // Move one step
+            length++;                // Increase count
+        } while (current != slow);   // Stop when we return to the same node
+
+        return length;
+    }
+};
