@@ -1,0 +1,76 @@
+/*
+=============================
+   SORT LINKED LIST OF 0s, 1s, 2s
+=============================
+Approach 1: Counting Sort (Two Pass)
+-------------------------------------
+- Count the number of 0s, 1s, and 2s in the list.
+- Overwrite the list with the counted values.
+- **Time Complexity**: O(N)  
+- **Space Complexity**: O(1) (in-place sorting)
+*/
+
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        if (!head || !head->next) return head;
+        
+        int count[3] = {0, 0, 0};
+        ListNode* temp = head;
+        
+        // Count occurrences of 0, 1, 2
+        while (temp) {
+            count[temp->val]++;
+            temp = temp->next;
+        }
+        
+        // Overwrite list with sorted values
+        temp = head;
+        for (int i = 0; i < 3; i++) {
+            while (count[i]--) {
+                temp->val = i;
+                temp = temp->next;
+            }
+        }
+        return head;
+    }
+};
+
+/*
+===================================
+Approach 2: Three-Pointer Approach (Single Pass)
+-----------------------------------------------
+- Create separate linked lists for 0s, 1s, and 2s.
+- Merge them back together in sorted order.
+- **Time Complexity**: O(N)  (Single Pass)
+- **Space Complexity**: O(1) (Modifies linked list in place)
+- **Better than Counting Sort** because it processes the list in one pass.
+*/
+
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        if (!head || !head->next) return head;
+        
+        // Dummy heads for three lists (0s, 1s, 2s)
+        ListNode *zeroHead = new ListNode(0), *oneHead = new ListNode(0), *twoHead = new ListNode(0);
+        ListNode *zero = zeroHead, *one = oneHead, *two = twoHead, *temp = head;
+        
+        // Partition nodes into three lists
+        while (temp) {
+            if (temp->val == 0) zero->next = temp, zero = zero->next;
+            else if (temp->val == 1) one->next = temp, one = one->next;
+            else two->next = temp, two = two->next;
+            temp = temp->next;
+        }
+        
+        // Connect the three lists
+        zero->next = oneHead->next ? oneHead->next : twoHead->next;
+        one->next = twoHead->next;
+        two->next = nullptr;
+        
+        ListNode* sortedHead = zeroHead->next;
+        delete zeroHead, delete oneHead, delete twoHead; // Free dummy nodes
+        return sortedHead;
+    }
+};
