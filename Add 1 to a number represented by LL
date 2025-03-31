@@ -1,0 +1,41 @@
+class Solution {
+public:
+    // Function to reverse a linked list
+    Node* reverse(Node* head) {
+        Node* prev = NULL, *curr = head, *next = NULL;
+        
+        while (curr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    Node* addOne(Node* head) {
+        // Step 1: Reverse the linked list
+        head = reverse(head);
+        
+        Node* temp = head;
+        int carry = 1;  // Adding 1 to the number
+        
+        // Step 2: Traverse the list and handle carry
+        while (temp && carry) {
+            temp->data += carry;
+            carry = temp->data / 10; // Carry for next digit
+            temp->data %= 10;        // Keep the last digit
+            
+            // If carry remains and we are at the last node, add a new node
+            if (!temp->next && carry) {
+                temp->next = new Node(1);
+                carry = 0;
+            }
+            
+            temp = temp->next;
+        }
+        
+        // Step 3: Reverse again to restore original order
+        return reverse(head);
+    }
+};
