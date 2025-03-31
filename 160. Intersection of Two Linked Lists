@@ -1,0 +1,31 @@
+*
+========================================
+    160. Intersection of Two Linked Lists
+========================================
+Approach 1: Two Pointer Technique (Optimal)
+-------------------------------------------
+- Use two pointers, one starting from headA and the other from headB.
+- Traverse both lists, switching to the other list when reaching the end.
+- When the two pointers meet, they are at the intersection node.
+- If they don’t intersect, both pointers will reach NULL at the same time.
+- **Time Complexity**: O(N + M)  (where N and M are the lengths of the two lists)
+- **Space Complexity**: O(1) (no extra space used)
+*/
+
+class Solution {
+public:
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        if (!headA || !headB) return NULL;  // Edge case: If either list is empty
+
+        ListNode* a = headA;
+        ListNode* b = headB;
+
+        // Traverse both lists; switch to the other list when reaching NULL
+        while (a != b) {
+            a = (a == NULL) ? headB : a->next;
+            b = (b == NULL) ? headA : b->next;
+        }
+
+        return a;  // If intersection exists, returns the node; otherwise, returns NULL
+    }
+};
