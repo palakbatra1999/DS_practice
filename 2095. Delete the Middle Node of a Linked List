@@ -1,0 +1,27 @@
+
+
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+
+        // If there is only one node, return NULL (middle = head itself)
+        if (head == NULL || head->next == NULL)
+            return NULL;
+
+        ListNode* slow = head;  // Slow pointer moves one step at a time
+        ListNode* fast = head;  // Fast pointer moves two steps at a time
+        ListNode* prev = head;  // Keeps track of the node before `slow`
+
+        // Move `slow` to the middle and `fast` to the end of the list
+        while (fast != NULL && fast->next != NULL) {
+            prev = slow;       // Keep track of the previous node
+            slow = slow->next; // Move slow one step
+            fast = fast->next->next; // Move fast two steps
+        }
+
+        // Remove the middle node by updating `prev->next`
+        prev->next = prev->next->next;
+
+        return head; // Return the modified list
+    }
+};
