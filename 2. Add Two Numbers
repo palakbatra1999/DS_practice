@@ -1,0 +1,93 @@
+/*
+====================================
+    Add Two Numbers (Linked List)
+====================================
+**Approach:**
+- Given two linked lists representing numbers in reverse order.
+- Each node contains a single digit.
+- We add corresponding digits from both lists and handle carry.
+- The result is stored in a new linked list.
+
+**Steps:**
+1. **Reverse both linked lists** (Optional, but useful if input is given in normal order).
+2. **Iterate through both lists** while adding corresponding digits and carry.
+3. **Handle extra digits** in the longer list.
+4. **Handle final carry** if needed.
+5. **Return the result linked list**.
+
+**Time Complexity:** O(N) (Traversing both lists once)
+**Space Complexity:** O(N) (Creating a new list)
+*/
+
+class Solution {
+public:
+    // Function to reverse a linked list
+    ListNode* reverse(ListNode* head) {
+        ListNode* prev = NULL, *curr = head, *next = NULL;
+        
+        while (curr) {
+            next = curr->next;  // Store next node
+            curr->next = prev;  // Reverse current node
+            prev = curr;         // Move prev to current
+            curr = next;         // Move current to next
+        }
+        return prev; // New head after reversing
+    }
+
+    ListNode* addTwoNumbers(ListNode* a, ListNode* b) {
+        ListNode *ans = new ListNode(0); // Dummy node to simplify result handling
+        ListNode *temp = ans;            // Pointer to track the result list
+        int carry = 0;                    // Carry initialization
+
+        // Step 1: Add corresponding digits from both lists
+        while (a != NULL && b != NULL) {
+            int sum = carry + a->val + b->val;
+            temp->next = new ListNode(sum % 10); // Store last digit of sum
+            carry = sum / 10;                     // Update carry
+            temp = temp->next;                    // Move to next node
+            a = a->next;
+            b = b->next;
+        }
+
+        // Step 2: Process remaining digits of longer list
+        while (a != NULL) {
+            int sum = carry + a->val;
+            temp->next = new ListNode(sum % 10);
+            carry = sum / 10;
+            temp = temp->next;
+            a = a->next;
+        }
+
+        while (b != NULL) {
+            int sum = carry + b->val;
+            temp->next = new ListNode(sum % 10);
+            carry = sum / 10;
+            temp = temp->next;
+            b = b->next;
+        }
+
+        // Step 3: Handle final carry
+        if (carry) {
+            temp->next = new ListNode(carry);
+        }
+
+        return ans->next; // Returning the actual result list (ignoring dummy node)
+    }
+};
+
+/*
+===================================
+🚀 **Key Notes for Quick Revision**
+-----------------------------------
+✅ **Why use a dummy node?**
+   - Simplifies linked list creation without extra edge cases.
+✅ **Why handle carry separately at the end?**
+   - If final sum > 9, we need an extra node for carry.
+✅ **Time Complexity:** O(N) (One pass through both lists)
+✅ **Space Complexity:** O(N) (New linked list created for the result)
+
+📌 **Edge Cases to Remember:**
+- Lists of different lengths (Handled in separate loops).
+- Final carry after last digit (Handled explicitly at the end).
+- Empty lists (Handled by base conditions automatically).
+*/
