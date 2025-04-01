@@ -1,0 +1,37 @@
+void deleteAllOccurOfX(struct Node** head, int x) {
+    // Edge case: If the list is empty, simply return
+    if (*head == NULL) return;
+
+    struct Node* temp = *head; // Pointer to traverse the list
+
+    while (temp != NULL) {
+        if (temp->data == x) {  // If the current node contains the target value
+            struct Node* toDelete = temp; // Store the node to be deleted
+
+            // Case 1: Deleting the head node
+            if (temp == *head) {
+                *head = temp->next; // Move head to the next node
+                
+                // If there's a new head, update its 'prev' pointer
+                if (*head != NULL) {
+                    (*head)->prev = NULL;
+                }
+            } 
+            // Case 2: Deleting a non-head node
+            else {
+                temp->prev->next = temp->next; // Update previous node's next pointer
+                
+                // If the node to be deleted is not the last node
+                if (temp->next != NULL) {
+                    temp->next->prev = temp->prev; // Update next node's prev pointer
+                }
+            }
+
+            temp = temp->next; // Move to the next node before deleting
+            delete toDelete;   // Free memory of the deleted node
+        } 
+        else {
+            temp = temp->next; // Move to the next node normally
+        }
+    }
+}
