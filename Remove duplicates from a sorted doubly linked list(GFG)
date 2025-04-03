@@ -1,0 +1,42 @@
+Node* removeDuplicates(struct Node* head)
+{
+    // Edge Case: If the list is empty or has only one node, return as it is
+    if (head == NULL || head->next == NULL) return head;
+
+    struct Node* temp = head;  // Pointer to traverse the list
+    struct Node* smallans = head;  // Stores the updated head (remains unchanged)
+
+    while (temp != NULL)
+    {
+        int dt = temp->data;  // Store the current node's value
+
+        struct Node* ans = temp;  // Keep track of the first occurrence of the current value
+        
+        // Move temp to the next distinct value (skip all duplicates)
+        while (temp != NULL && temp->data == dt)
+        {
+            temp = temp->next;
+        }
+
+        // Link the last occurrence of dt to the next distinct node
+        ans->next = temp;
+        
+        // If temp is not NULL, update its prev pointer
+        if (temp != NULL)
+            temp->prev = ans;
+    }
+
+    return smallans;  // Return the modified list
+}
+
+
+
+Revision Notes & Tips 📝
+✅ Doubly Linked List: Since it's a doubly linked list, update both next and prev pointers properly.
+✅ Two Pointers Approach: temp moves through the list, while ans holds the last occurrence of a value.
+✅ Handles Edge Cases:
+
+If the list is empty or has one node, return immediately.
+
+Works even if all nodes have the same value (e.g., 1 -> 1 -> 1 -> NULL). ✅ Time Complexity: O(N) (since each node is visited once).
+✅ Space Complexity: O(1) (modifies the list in place, no extra space used).
