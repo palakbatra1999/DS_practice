@@ -1,0 +1,47 @@
+class Solution
+{
+public:
+    vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target)
+    {
+        vector<pair<int, int>> vec;  // Stores the pairs with the given sum
+        if (head == NULL) return vec;  // Edge case: if the list is empty, return an empty vector
+        
+        Node *leftNode = head, *rightNode = head;
+        
+        // Move rightNode to the last node (tail of the doubly linked list)
+        while (rightNode->next != NULL)
+            rightNode = rightNode->next;
+        
+        // Two-pointer approach to find pairs with the given sum
+        while (leftNode->data < rightNode->data)  // Ensuring no duplicate pairs
+        {
+            int sum = leftNode->data + rightNode->data;
+
+            if (sum == target)  // If sum matches the target, store the pair
+            {
+                pair<int, int> pp;
+                pp.first = leftNode->data;
+                pp.second = rightNode->data;
+                
+                vec.push_back(pp);  // Store the pair
+                
+                // Move pointers inward to find the next possible pair
+                leftNode = leftNode->next;
+                rightNode = rightNode->prev;
+            }
+            else if (sum > target)  
+                rightNode = rightNode->prev;  // Decrease sum by moving the right pointer left
+            else 
+                leftNode = leftNode->next;  // Increase sum by moving the left pointer right
+        }
+        
+        return vec;
+    }
+};
+
+
+
+✅ Use Two-Pointer approach when the given list or array is sorted (like in this problem).
+✅ Use HashMap when the list/array is unsorted (to store visited elements and find pairs in O(N) time).
+✅ Two-Pointer approach works in O(N) time complexity compared to sorting (O(N log N) + O(N) = O(N log N)).
+
