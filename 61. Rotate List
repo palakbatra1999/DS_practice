@@ -1,0 +1,89 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+
+        // temp will help in traversal, newHead will be used to find the end, slow will track previous node
+        ListNode *temp = head, *newHead = head, *slow = head;
+
+        // dummy is unused in final logic, so technically it can be removed
+        ListNode *dummy = new ListNode(0); 
+
+        // edge case: if list is empty, has only one node, or no rotation needed
+        if (head == NULL || head->next == NULL || k == 0)
+            return head;
+
+        int count = 0, total = 1;
+
+        // Step 1: Count total number of nodes in the list
+        while (newHead->next != NULL) {
+            total++;
+            newHead = newHead->next;
+        }
+
+        // Step 2: Normalize k (no point rotating more than total nodes)
+        k = k % total;
+
+        // Step 3: Calculate how many steps to reach the new tail (total - k)
+        // This is a key insight: if we rotate right by k, the new head will be (total - k) from the beginning
+        k = total - k;
+
+        // Step 4: Connect last node to head to form a circular linked list
+        newHead->next = head;
+
+        // Step 5: Move temp to the new head position, while slow will stop at new tail
+        while (count != k) {
+            slow = temp;
+            temp = temp->next;
+            count++;
+        }
+
+        // Step 6: Break the loop to finalize the new list
+        slow->next = NULL;
+
+        // Step 7: Return new head after rotation
+        return temp;
+    }
+};
+
+
+✅ Tips & Tricks to Remember:
+When rotating a list to the right by k places:
+
+Think of it as moving the last k nodes to the front.
+
+The new head will be at position total - k.
+
+Convert the list into a circular linked list, then break it at the correct spot.
+
+Always normalize k using k = k % total to avoid extra work.
+
+Avoid extra memory usage (dummy nodes or arrays) if the list can be rotated in-place.
+
+🔁 Pattern This Problem Belongs To:
+Linked List Rotation / Reversal Pattern
+
+Similar to problems like:
+
+Rotate Left/Right in Array or List
+
+Reverse Nodes in K Groups
+
+Cycle Detection (modulo use)
+
+Circular Linked List Technique:
+
+Temporarily making a list circular is a smart trick to handle rotation/reordering.
+
+Two-pointer traversal, where one tracks the position and the other is used to disconnect or reconnect.
+
