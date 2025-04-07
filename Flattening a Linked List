@@ -1,0 +1,83 @@
+class Solution {
+  public:
+  
+  // Merge two sorted linked lists using 'bottom' pointer
+  Node *merge(Node *a, Node *b){
+       
+       // If one list is empty, return the other
+       if (!a) return b;
+       if (!b) return a;
+       
+       // Dummy node to start the merged list
+       Node *dummy = new Node(0);
+       Node *head = dummy;  // 'head' will point to the start of the merged list
+       
+       // Traverse both lists and merge them in sorted order
+       while (a && b) {
+           if (a->data > b->data) {
+               dummy->bottom = b;     // link b to the result
+               b = b->bottom;         // move b forward
+           } else {
+               dummy->bottom = a;     // link a to the result
+               a = a->bottom;         // move a forward
+           }
+           dummy = dummy->bottom;     // move dummy forward to the last node
+       }
+       
+       // Attach remaining nodes from either list
+       if (a) dummy->bottom = a;
+       if (b) dummy->bottom = b;
+       
+       // Return merged list starting from dummy->bottom
+       return head->bottom;
+   }
+
+   // Recursively flatten the linked list
+   Node *flatten(Node *root) {
+       // Base case: if root is null or only one list left
+       if (root == NULL || root->next == NULL)
+           return root;
+    
+       // First, flatten the remaining right side
+       root->next = flatten(root->next);
+       
+       // Then, merge current list (root) with already flattened list (root->next)
+       root = merge(root, root->next);
+       
+       return root;
+   }
+};
+
+
+🧠 Tips & Tricks:
+✅ Pattern: Recursion + Merge
+This problem follows a Divide and Conquer approach, similar to Merge Sort:
+
+You flatten the rest of the list recursively
+
+Then merge the current node's list with the result
+
+✅ When to use dummy nodes:
+Use dummy nodes when you want to simplify head/tail handling while merging lists.
+
+✅ Think bottom-up:
+We flatten the right-most list first, then merge back to the left — so the recursion goes bottom-up.
+
+✅ Key pointer logic:
+Don't use .next in the merge — only use .bottom
+
+Flattened list uses only .bottom, and all .next pointers are ignored
+
+
+🪄 How to Come Up with This Solution?
+Understand the structure: You’re given a linked list where each node has two pointers — next (right) and bottom (down)
+
+Reframe the question: You want to merge all these vertical lists into one single sorted list, using only bottom
+
+Recursive thinking:
+
+Break the problem into smaller pieces: flatten root->next first
+
+Then merge current vertical list with flattened right side
+
+Recognize the pattern: This is Merge K Sorted Linked Lists, where each column is a sorted list — solved recursively two at a time
