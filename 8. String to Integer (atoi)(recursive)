@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+
+        int i = 0, l = s.length(), flag = 1;
+
+        while (i < l && s[i] == ' ')
+            i++;
+
+        if (i < l && s[i] == '-') {
+            flag = -1;
+            i++;
+        }
+
+        else if (i < l && s[i] == '+')
+            i++;
+
+        long ans = 0;
+
+        return parseDigits(s, i, ans, flag);
+    }
+
+    int parseDigits(string s, int i, long ans, int flag) {
+        if (i >= s.length() || !isdigit(s[i]))
+            return flag * ans;
+
+        ans = ans * 10 + (s[i] - '0');
+
+        if (ans > INT_MAX) {
+            if (flag != -1)
+                return INT_MAX;
+            if (flag == -1)
+                return INT_MIN;
+        }
+        if (ans < INT_MIN) {
+            if (flag != -1)
+                return INT_MIN;
+            if (flag == -1)
+                return INT_MAX;
+        }
+
+        return parseDigits(s, i + 1, ans, flag);
+    }
+};
