@@ -1,0 +1,41 @@
+class Solution {
+public:
+
+    // TIP 💡: Use fast exponentiation (a.k.a. exponentiation by squaring)
+    // It reduces time complexity from O(n) → O(log n)
+    // Basic idea: 
+    //   - x^n = (x^(n/2))^2 if n is even
+    //   - x^n = (x^(n/2))^2 * x if n is odd
+    // This recursion breaks the problem into halves each time
+
+    double calcPower(double x, long long n) {
+        // Base case: anything raised to the power 0 is 1
+        if (n == 0)
+            return 1.0;
+
+        // Recursively calculate x^(n/2)
+        double half = calcPower(x, n / 2);
+
+        // If power is even, result is just half * half
+        if (n % 2 == 0)
+            return half * half;
+
+        // If power is odd, multiply one more x
+        return half * half * x;
+    }
+
+    double myPow(double x, int n) {
+        // ⚠️ Convert n to long long to handle edge case: n == INT_MIN
+        // Because abs(INT_MIN) > INT_MAX, and flipping it causes overflow
+        long long N = n;
+
+        // If exponent is negative, convert it to positive and invert the base
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+
+        // Call the recursive fast exponentiation
+        return calcPower(x, N);
+    }
+};
