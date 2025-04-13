@@ -39,3 +39,18 @@ public:
         return calcPower(x, N);
     }
 };
+
+
+🔧 Bonus Tips:
+✅ Always check for INT_MIN in power problems
+
+✅ Use recursion or iteration with squaring for exponentiation
+
+❌ Avoid n-- or x *= x in loops for large n, as it’s O(n) and TLE-prone
+
+✅ In interviews, explain the time complexity:
+
+Time: O(log n)
+Space: O(log n) due to recursion stack
+
+
