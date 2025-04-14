@@ -1,0 +1,27 @@
+class Solution {
+public:
+    // just think in a way that if you are standing on one index.. you want to
+    // take it or not.. simple
+    void generateSubsets(vector<vector<int>>& ans, vector<int> curr,
+                         vector<int> nums, int n, int i) {
+        if (i >= n) {
+            ans.push_back(curr);
+            return;
+        }
+        generateSubsets(ans, curr, nums, n,
+                        i + 1); // dont take the current index
+
+        curr.push_back(nums[i]);
+        generateSubsets(ans, curr, nums, n, i + 1); // take the current index
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+
+        vector<vector<int>> ans;
+        vector<int> curr;
+        int n = nums.size();
+
+        generateSubsets(ans, curr, nums, n, 0);
+
+        return ans;
+    }
+};
