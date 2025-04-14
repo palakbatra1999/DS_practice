@@ -1,0 +1,62 @@
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        backtrack(result, "", 0, 0, n);
+        return result;
+    }
+
+private:
+    // 🎯 backtrack function generates all valid combinations
+    void backtrack(vector<string>& result, string current, int open, int close, int max) {
+        // ✅ Base Case: When we reach 2*n characters, add to result
+        if (current.length() == 2 * max) {
+            result.push_back(current);
+            return;
+        }
+
+        // 🧠 TIP 1: You can always add '(' if we haven't used up all opens
+        if (open < max) {
+            backtrack(result, current + "(", open + 1, close, max);
+        }
+
+        // 🧠 TIP 2: Only add ')' if it won't break validity (i.e., open > close)
+        if (close < open) {
+            backtrack(result, current + ")", open, close + 1, max);
+        }
+    }
+};
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+🧠 Tips & Tricks:
+Think of a stack:
+
+Valid parentheses means everything opened must be closed properly.
+
+open = pushes to stack, close = pops from stack.
+
+Use constraints to prune invalid paths:
+
+Never let close > open → this ensures every ')' has a matching '('.
+
+No need to undo (backtrack) manually:
+
+We're using current + "(" and current + ")", so each call works with a new string.
+
+Recursion Tree:
+
+Each node is a state.
+
+Each level adds one more bracket until you reach 2*n length.
