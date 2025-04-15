@@ -1,0 +1,38 @@
+class Solution {
+public:
+    // Recursive helper function to generate combinations
+    void generateSubsets(vector<vector<int>>& ans, vector<int> curr,
+                         vector<int> nums, int n, int sum, int i, int target) {
+        
+        // ✅ Base case: if sum matches target, add current path to result
+        if (sum == target) {
+            ans.push_back(curr);
+            return;
+        }
+
+        // ❌ Prune the recursion if sum exceeds target or index out of bounds
+        if (sum > target || i >= n) {
+            return;
+        }
+
+        // 🔁 Choice 1: Include nums[i] and stay at the same index
+        curr.push_back(nums[i]);
+        generateSubsets(ans, curr, nums, n, sum + nums[i], i, target); // reuse allowed
+
+        // 🔁 Choice 2: Exclude nums[i] and move to next index
+        curr.pop_back(); // backtrack the previous choice
+        generateSubsets(ans, curr, nums, n, sum, i + 1, target); // move forward
+    }
+
+    // Main function to initiate recursion
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;     // Stores the final list of valid combinations
+        vector<int> curr;            // Current combination being built
+        int n = candidates.size();   // Number of elements in the input array
+
+        // Start backtracking from index 0, sum 0
+        generateSubsets(ans, curr, candidates, n, 0, 0, target);
+
+        return ans;
+    }
+};
