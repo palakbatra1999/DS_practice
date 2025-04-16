@@ -1,0 +1,57 @@
+🌟 LC 78 — Subsets (No Duplicates)
+🧠 Pattern: Backtracking / DFS / Include-Exclude
+For each element, you have two choices:
+
+Include it
+
+Exclude it
+
+You generate all 2^n subsets this way.
+
+🔑 Tips & Tricks:
+✅ No need to sort — elements are unique.
+
+✅ You can add the subset:
+
+either at each call (ans.push_back(curr)) or
+
+only when i == n (since all subsets are unique)
+
+✨ No need to handle duplicates — no check like if(nums[j] == nums[j-1])
+
+💭 Thinking Process:
+You’re exploring all possible paths.
+
+For every index, decide to take or skip it.
+
+When you hit the end (base case), you have a valid subset.
+
+You don’t need to skip anything, because no two subsets will be the same.
+
+🔁 LC 90 — Subsets II (With Duplicates)
+🧠 Pattern: Backtracking + Skip Duplicates
+Still backtracking, but with extra care:
+
+Use sorted input
+
+Skip duplicates at the same recursion level
+
+🔑 Tips & Tricks:
+✅ Sort the array to bring duplicates together
+
+🚫 Use:
+
+
+if (j > i && nums[j] == nums[j - 1]) continue;
+Skips picking the same number again at the same level
+
+✅ Push curr at every recursion call (not just at the base!)
+
+❌ No need for set — handle uniqueness with skip logic
+
+💭 Thinking Process:
+You still make subsets like LC 78, but…
+
+Now you have to think about whether including the same number again creates a duplicate subset.
+
+You realize sorted input + skipping when nums[j] == nums[j - 1] ensures uniqueness.
