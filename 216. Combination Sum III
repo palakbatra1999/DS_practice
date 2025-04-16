@@ -1,0 +1,38 @@
+class Solution {
+public:
+    // 🔁 Backtracking function to explore combinations
+    void backtrack(vector<vector<int>>& ans, vector<int> nums, vector<int> curr, int i, int n, int k) {
+        // ✅ Base Case: If k numbers are chosen AND they sum to n → push to result
+        if (k == 0 && n == 0) {
+            ans.push_back(curr);
+            return;
+        }
+
+        // ❌ Base Case: If out of bounds or invalid (too many numbers or sum exceeded)
+        if (i > 8 || n < 0 || k < 0)
+            return;
+
+        // 🚫 Choice 1: Skip current number (don’t include nums[i])
+        backtrack(ans, nums, curr, i + 1, n, k);
+
+        // ✅ Choice 2: Take current number
+        curr.push_back(nums[i]);
+        backtrack(ans, nums, curr, i + 1, n - nums[i], k - 1);
+    }
+
+    // 🎯 Main function
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> nums; // holds numbers 1 through 9
+        vector<int> curr; // current combination
+        vector<vector<int>> ans; // final answer
+
+        // 🧱 Step 1: Fill nums with digits 1 to 9 (unique and fixed)
+        for (int i = 1; i <= 9; i++)
+            nums.push_back(i);
+
+        // 🚀 Start backtracking from index 0
+        backtrack(ans, nums, curr, 0, n, k);
+
+        return ans;
+    }
+};
