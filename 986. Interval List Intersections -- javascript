@@ -1,0 +1,26 @@
+function intervalIntersection(A, B) {
+  let i = 0, j = 0;
+  const result = [];
+
+  while (i < A.length && j < B.length) {
+    const [startA, endA] = A[i];
+    const [startB, endB] = B[j];
+
+    // Find overlap
+    const start = Math.max(startA, startB);
+    const end = Math.min(endA, endB);
+
+    if (start <= end) {
+      result.push([start, end]);
+    }
+
+    // Move the pointer which ends first
+    if (endA < endB) {
+      i++;
+    } else {
+      j++;
+    }
+  }
+
+  return result;
+}
