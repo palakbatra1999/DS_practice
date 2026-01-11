@@ -1,28 +1,35 @@
 class Solution {
 public:
-    vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> generate(int n) {
 
-        vector<vector<int>> v;
-        vector<int> vec;
-        vec.push_back(1);
-        v.push_back(vec);
-         cout<<" "<<v.size()<<" ";
-        numRows=numRows-1;
-        while(numRows)
-        {
-             vector<int> ans;
-             int l=v.size();
-            cout<<" "<<l<<" ";
-            for(int i=0;i<v[l-1].size()+1;i++)
-            {
-               if(i==0 || i==  v[l-1].size())      // just use previous vector to generate the next
-               ans.push_back(1);
-               else ans.push_back(v[l-1][i]+v[l-1][i-1]);
+        // arr will store the complete Pascal's Triangle
+        // arr[i] represents the i-th row (0-based)
+        vector<vector<int>> arr;
+
+        // Loop to generate each row of the triangle
+        for (int i = 0; i < n; i++) {
+
+            // Create a row of size (i + 1)
+            // Initialize all values with 1 because:
+            // - First element is always 1
+            // - Last element is always 1
+            vector<int> v(i + 1, 1);
+
+            // Fill only the middle elements of the row
+            // First (j=0) and last (j=i) are already 1
+            for (int j = 1; j < i; j++) {
+
+                // Pascal's Triangle formula:
+                // current = above-left + above-right
+                // v[j] = arr[i-1][j-1] + arr[i-1][j]
+                v[j] = arr[i - 1][j - 1] + arr[i - 1][j];
             }
-            numRows--;
 
-            v.push_back(ans);
+            // Add the completed row to the triangle
+            arr.push_back(v);
         }
-        return v;
+
+        // Return the complete Pascal's Triangle
+        return arr;
     }
 };
